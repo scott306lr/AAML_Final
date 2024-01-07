@@ -4,7 +4,7 @@
 
 ### 1. Prepare a supperted board (We use Nexys A7-100T) and install required toolchains. See [Setup Guide](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/archive.html) for more details
 
-### 2. Clone the CFU-Playground Repository from the github:
+### 2. Clone the CFU-Playground Repository from the github
 
 ``` bash
 git clone https://github.com/scott306lr/AAML_Final.git
@@ -17,7 +17,7 @@ cd AAML_Final
 ./scripts/setup
 ```
 
-### 4. Enter project directory and run the build script:
+### 4. Enter project directory and run the build script
 
 After the build process is finished, press enter and type 'reboot' to reboot and start the system.
 
