@@ -2,7 +2,7 @@
 
 ## Setup Guide
 
-### 1. Prepare a supperted board (We use Nexys A7-100T) and install required toolchains. See [Setup Guide](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/archive.html) for more details
+### 1. Prepare a supported board (We use Nexys A7-100T) and install required toolchains. See [Setup Guide](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/archive.html) for more details
 
 ### 2. Clone the CFU-Playground Repository from the github
 
