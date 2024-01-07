@@ -17,7 +17,7 @@ cd AAML_Final
 ./scripts/setup
 ```
 
-### 4. Enter project directory and run the build script
+### 4. Build Program and Start System
 
 After the build process is finished, press enter and type 'reboot' to reboot and start the system.
 
