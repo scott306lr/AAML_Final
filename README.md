@@ -19,25 +19,28 @@ cd AAML_Final
 
 ### 4. Enter project directory and run the build script:
 
-After the build process is finished, press enter and type 'reboot' to reboot and enter the system.
+After the build process is finished, press enter and type 'reboot' to reboot and start the system.
 
 ``` bash
-# automized script for building the project.
+# Automized script for building the project.
+# Equivalent to "make build && make load", while fixing multiple definition of a non-constant variable.
 
-# equivalent to make build && make load, 
-# while fixing multiple definition of a non-constant variable.
+# enter the project directory
+cd proj/AAML_final_proj
+
+# building project with the default model
 bash run.sh
 
-# building project with a custom model:
-bash run.sh -m <model_name>
+# building project with our custom model
+bash run.sh -m "../../model_compression/final_0.875_qat_model.tflite"
 
-# verbose mode, for debugging:
+# verbose mode, for debugging
 bash run.sh -v
 ``````
 
 ### 5. Run Golden Test
 
-Press ```1, 1, g``` using keyboard after the program started.
+Using keyboard, type ```1, 1, g``` after the program started.
 
 ### 6. Run Evaluation Test
 
