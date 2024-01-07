@@ -25,29 +25,29 @@ After the build process is finished, press enter and type 'reboot' to reboot and
 # Automized script for building the project.
 # Equivalent to "make build && make load", while fixing multiple definition of a non-constant variable.
 
-# enter the project directory
+# Enter the project directory
 cd proj/AAML_final_proj
 
-# building project with the default model
+# Building project with the default model
 bash run.sh
 
-# building project with our custom model
+# Building project with our custom model
 bash run.sh -m "../../model_compression/final_0.875_qat_model.tflite"
 
-# verbose mode, for debugging
+# Verbose mode, for debugging
 bash run.sh -v
 ``````
 
 ### 5. Run Golden Test
 
-Using keyboard, type ```1, 1, g``` after the program started.
+Using keyboard, type ```11g``` after the program started.
 
 ### 6. Run Evaluation Test
 
-After the program started, press ctrl+c to stop the program, then run the following command:
+After the program started, press ctrl+c to leave litex-term, then run the following command:
 
 ``` bash
-python3 evaluation.py
+python evaluation.py
 ```
 
 ## Some Test Results
