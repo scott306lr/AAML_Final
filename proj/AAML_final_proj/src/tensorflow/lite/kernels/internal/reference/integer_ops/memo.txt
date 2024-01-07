@@ -1,0 +1,13 @@
+ 
+ // 0.88 model
+       org: 16031743
+    no cfu: 15795861
+ no im2col: 11214948
+
+ // org model
+    org(64): 18645439
+    org(32): 18645439
+  no im2col: 11341799
+     no cfu: 18520259
+    no both: 7620117
+    
