@@ -16,6 +16,7 @@ limitations under the License.
 #define TENSORFLOW_LITE_KERNELS_INTERNAL_REFERENCE_INTEGER_OPS_CONV_H_
 
 #include <algorithm>
+#include <cstdio>
 
 #include "cfu.h"
 #include "playground_util/print_params.h"
@@ -54,7 +55,8 @@ inline void ConvPerChannel(
     const int pad_height = params.padding_values.height;
     const int32_t output_offset = params.output_offset;
     const int32_t input_offset = params.input_offset;  // r = s(q - Z)
-    cfu_op0(2, input_offset & 0x1FF, 0);               // mask out the 9 MSBs
+    cfu_op0(7, input_offset & 0x1FF, 0);               // mask out the 9 MSBs
+    // printf("input_offset: %ld\n", ret);
 
     // Set min and max value of the output.
     const int32_t output_activation_min = params.quantized_activation_min;
@@ -80,22 +82,46 @@ inline void ConvPerChannel(
     const int output_height = output_shape.Dims(1);
     const int output_width = output_shape.Dims(2);
 
+    // const int* dims_data = reinterpret_cast<const int*>(input_shape.DimsData());
+    // const int* filter_dims_data = reinterpret_cast<const int*>(filter_shape.DimsData());
+
+    const int batch_off_unit = input_shape.Dims(1) * input_shape.Dims(2) * input_shape.Dims(3);
+    const int in_y_off_unit = input_shape.Dims(2) * input_shape.Dims(3);
+    const int in_x_off_unit = input_shape.Dims(3);
+
+    const int out_channel_off_unit = filter_shape.Dims(1) * filter_shape.Dims(2) * filter_shape.Dims(3);
+    const int filter_y_off_unit = filter_shape.Dims(2) * filter_shape.Dims(3);
+    const int filter_x_off_unit = filter_shape.Dims(3);
+
     for (int batch = 0; batch < batches; ++batch) {
+        int batch_off_base = batch * batch_off_unit;
+
         for (int out_y = 0; out_y < output_height; ++out_y) {
             const int in_y_origin = (out_y * stride_height) - pad_height;
             for (int out_x = 0; out_x < output_width; ++out_x) {
                 const int in_x_origin = (out_x * stride_width) - pad_width;
                 for (int out_channel = 0; out_channel < output_depth; ++out_channel) {
-                    int32_t acc = cfu_op0(1, 0, 0);
+                    int32_t acc = cfu_op0(5, 0, 0);
+
+                    int out_channel_base = out_channel * out_channel_off_unit;
+
                     for (int filter_y = 0; filter_y < filter_height; ++filter_y) {
+                        
+                        int filter_y_base = filter_y * filter_y_off_unit;
+
                         const int in_y = in_y_origin + dilation_height_factor * filter_y;
+                        int in_y_off_base = in_y * in_y_off_unit;
+
                         if (is_a_ge_zero_and_a_lt_b(in_y, input_height)) {
                             for (int filter_x = 0; filter_x < filter_width; ++filter_x) {
+                                int filter_x_base = filter_x * filter_x_off_unit;
+
                                 const int in_x = in_x_origin + dilation_width_factor * filter_x;
+                                int in_x_off_base = in_x * in_x_off_unit;
                                 if (is_a_ge_zero_and_a_lt_b(in_x, input_width)) {
                                     // get input and filter pointers
-                                    const int8_t* input_ptr = &input_data[Offset(input_shape, batch, in_y, in_x, 0)];
-                                    const int8_t* filter_ptr = &filter_data[Offset(filter_shape, out_channel, filter_y, filter_x, 0)];
+                                    const int8_t* input_ptr = input_data + batch_off_base + in_y_off_base + in_x_off_base;
+                                    const int8_t* filter_ptr = filter_data + out_channel_base + filter_y_base + filter_x_base;
                                     const int normal_depth = input_depth - (input_depth % 4);
                                     const int remaining_depth = input_depth - normal_depth;
                                     int32_t input_val = 0;
@@ -105,7 +131,7 @@ inline void ConvPerChannel(
                                     for (int in_channel = 0; in_channel < normal_depth; in_channel += 4) {
                                         input_val = *reinterpret_cast<const int32_t*>(input_ptr + in_channel);
                                         filter_val = *reinterpret_cast<const int32_t*>(filter_ptr + in_channel);
-                                        acc = cfu_op0(0, input_val, filter_val);
+                                        acc = cfu_op0(6, input_val, filter_val);
                                     }
                                     // process remaining input channels
                                     if (remaining_depth > 0) {
@@ -115,7 +141,7 @@ inline void ConvPerChannel(
                                             input_val = (input_val << 8) | (static_cast<int32_t>(input_ptr[normal_depth + d]) & 0xFF);
                                             filter_val = (filter_val << 8) | (static_cast<int32_t>(filter_ptr[normal_depth + d]) & 0xFF);
                                         }
-                                        acc = cfu_op0(0, input_val, filter_val);
+                                        acc = cfu_op0(6, input_val, filter_val);
                                     }
                                 }
                             }
@@ -125,6 +151,7 @@ inline void ConvPerChannel(
                     if (bias_data) {
                         acc += bias_data[out_channel];
                     }
+
                     acc = MultiplyByQuantizedMultiplier(
                         acc, output_multiplier[out_channel], output_shift[out_channel]);
                     acc += output_offset;
