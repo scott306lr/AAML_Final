@@ -4,12 +4,11 @@
 
 About how to setup the project, please reference to [README.md in the root directory](https://github.com/scott306lr/AAML_Final/blob/main/README.md).
 
+The final compressed model `final_0.875_qat_model.tflite` is located in the `model_compression` directory, which is created by using the scripts mentioned below.
+
 ## Training Code
 
-The final compressed model `final_0.875_qat_model.tflite` is located in the `model_compression` directory.
-If you would like to reproduce the results, please follow the steps below:
-
-Install the required packages:
+For the scripts to work properly, first install the additional required packages:
 
 ```bash
 
