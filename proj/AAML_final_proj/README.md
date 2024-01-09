@@ -1,12 +1,13 @@
 # CFU Playground - AAML Final Project - Group 4
 
-The final compressed model `final_0.875_qat_model.tflite` is located in the `model_compression` directory.
-
 ## Setup Project
 
-About how to setup the project, please reference [README.md in the root directory](https://github.com/scott306lr/AAML_Final/blob/main/README.md).
+About how to setup the project, please reference to [README.md in the root directory](https://github.com/scott306lr/AAML_Final/blob/main/README.md).
 
 ## Training Code
+
+The final compressed model `final_0.875_qat_model.tflite` is located in the `model_compression` directory.
+If you would like to reproduce the results, please follow the steps below:
 
 Install the required packages:
 
@@ -21,8 +22,8 @@ pip install git+https://github.com/alibaba/TinyNeuralNetwork.git
 There are three steps to build the final compressed model:
 
 1. Train the baseline model
-2. Prune the baseline model
-3. Quantize and convert the model to tflite
+2. Prune and finetune the baseline model
+3. Apply Quantization-Aware Training(QAT) then convert the model to tflite.
 
 ```bash
 # Enter the project directory
