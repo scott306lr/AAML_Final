@@ -93,11 +93,8 @@ inline void ConvPerChannel(
     const int filter_y_off_unit = filter_shape.Dims(2) * filter_shape.Dims(3);
     const int filter_x_off_unit = filter_shape.Dims(3);
 
-    const int normal_depth = input_depth - (input_depth % 4);
-    const int remaining_depth = input_depth - normal_depth;
-
     for (int batch = 0; batch < batches; ++batch) {
-        const int batch_off_base = batch * batch_off_unit;
+        int batch_off_base = batch * batch_off_unit;
 
         for (int out_y = 0; out_y < output_height; ++out_y) {
             const int in_y_origin = (out_y * stride_height) - pad_height;
@@ -106,26 +103,26 @@ inline void ConvPerChannel(
                 for (int out_channel = 0; out_channel < output_depth; ++out_channel) {
                     int32_t acc = cfu_op0(5, 0, 0);
 
-                    const int out_channel_base = out_channel * out_channel_off_unit;
+                    int out_channel_base = out_channel * out_channel_off_unit;
 
                     for (int filter_y = 0; filter_y < filter_height; ++filter_y) {
-                        
-                        const int filter_y_base = filter_y * filter_y_off_unit;
+                        int filter_y_base = filter_y * filter_y_off_unit;
 
                         const int in_y = in_y_origin + dilation_height_factor * filter_y;
-                        const int in_y_off_base = in_y * in_y_off_unit;
+                        int in_y_off_base = in_y * in_y_off_unit;
 
                         if (is_a_ge_zero_and_a_lt_b(in_y, input_height)) {
                             for (int filter_x = 0; filter_x < filter_width; ++filter_x) {
                                 int filter_x_base = filter_x * filter_x_off_unit;
 
                                 const int in_x = in_x_origin + dilation_width_factor * filter_x;
-                                const int in_x_off_base = in_x * in_x_off_unit;
+                                int in_x_off_base = in_x * in_x_off_unit;
                                 if (is_a_ge_zero_and_a_lt_b(in_x, input_width)) {
                                     // get input and filter pointers
                                     const int8_t* input_ptr = input_data + batch_off_base + in_y_off_base + in_x_off_base;
                                     const int8_t* filter_ptr = filter_data + out_channel_base + filter_y_base + filter_x_base;
-
+                                    const int normal_depth = input_depth - (input_depth % 4);
+                                    const int remaining_depth = input_depth - normal_depth;
                                     int32_t input_val = 0;
                                     int32_t filter_val = 0;
 
