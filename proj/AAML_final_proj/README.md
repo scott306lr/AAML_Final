@@ -2,6 +2,10 @@
 
 The final compressed model `final_0.875_qat_model.tflite` is located in the `model_compression` directory.
 
+## Setup Project
+
+About how to setup the project, please reference [README.md in the root directory](https://github.com/scott306lr/AAML_Final/blob/main/README.md).
+
 ## Training Code
 
 Install the required packages:
@@ -36,3 +40,10 @@ python pruning/main.py --mode prune --model resnet8 --batch-size 128 --dataset c
 # Quantize and convert the model to tflite
 python quick_start_for_expert.py --model-path <path_to_pruned_model>
 ```
+
+## Reference
+The training scripts are modified from the following repositories:
+[Torchvision - Image classification reference training scripts](https://github.com/pytorch/vision/tree/main/references/classification)
+[Torch-Pruning - benchmarks](https://github.com/VainF/Torch-Pruning/tree/master/benchmarks)
+[TinyNeuralNetwork - examples](https://github.com/alibaba/TinyNeuralNetwork/tree/23b02a3f3fd57adaa303be4aaab313f9ab70f83e)
+
