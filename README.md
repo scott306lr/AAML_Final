@@ -32,7 +32,7 @@ cd proj/AAML_final_proj
 bash run.sh
 
 # Building project with our custom model
-bash run.sh -m "../../model_compression/final_0.875_qat_model.tflite"
+bash run.sh -m "model_compression/final_0.875_qat_model.tflite"
 
 # Verbose mode, for debugging
 bash run.sh -v
