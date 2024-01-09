@@ -120,13 +120,13 @@ inline void ConvPerChannel(
                         const int in_y = in_y_origin + dilation_height_factor * filter_y;
                         const int in_y_off_base = in_y * in_y_off_unit;
 
-                        if (is_a_ge_zero_and_a_lt_b(in_y, input_height)) {
+                        if (is_a_ge_zero_and_a_lt_b(in_y, input_height)) [[likely]] {
                             for (int filter_x = 0; filter_x < filter_width; ++filter_x) {
                                 const int filter_x_base = filter_x * filter_x_off_unit;
 
                                 const int in_x = in_x_origin + dilation_width_factor * filter_x;
                                 const int in_x_off_base = in_x * in_x_off_unit;
-                                if (is_a_ge_zero_and_a_lt_b(in_x, input_width)) {
+                                if (is_a_ge_zero_and_a_lt_b(in_x, input_width)) [[likely]] {
                                     // get input and filter pointers
                                     const int8_t* input_ptr = input_data + batch_off_base + in_y_off_base + in_x_off_base;
                                     const int8_t* filter_ptr = filter_data + out_channel_base + filter_y_base + filter_x_base;
