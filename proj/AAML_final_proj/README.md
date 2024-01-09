@@ -47,5 +47,5 @@ The training scripts are modified from the following repositories:
 
 * [Torchvision - Image classification reference training scripts](https://github.com/pytorch/vision/tree/main/references/classification)
 * [Torch-Pruning - benchmarks](https://github.com/VainF/Torch-Pruning/tree/master/benchmarks)
-* [TinyNeuralNetwork - examples](https://github.com/alibaba/TinyNeuralNetwork/tree/23b02a3f3fd57adaa303be4aaab313f9ab70f83e)
+* [TinyNeuralNetwork - examples](https://github.com/alibaba/TinyNeuralNetwork/tree/main/examples)
 
