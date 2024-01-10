@@ -38,7 +38,7 @@ python pruning/main.py --mode prune --model resnet8 --batch-size 128 --dataset c
 python pruning/main.py --mode prune --model resnet8 --batch-size 128 --dataset cifar10 --method group_sl --speed-up 1.3 --global-pruning --reg 1e-4 --total-epochs 100 --sl-total-epochs 5 --restore <path_to_trained_model> --load-pruned <path_to_pruned_model> --wandb 
 
 # Quantize and convert the model to tflite
-python quick_start_for_expert.py --model-path <path_to_pruned_model>
+python qat_convert/quick_start_for_expert.py --model-path <path_to_pruned_model>
 ```
 
 ## Reference
