@@ -19,8 +19,6 @@ cd AAML_Final
 
 ### 4. Build Program and Start System
 
-After the build process is finished, press enter and type 'reboot' to reboot and start the system.
-
 ``` bash
 # Automized script for building the project.
 # Equivalent to "make build && make load", while fixing multiple definition of a non-constant variable.
@@ -38,9 +36,11 @@ bash run.sh -m "model_compression/final_0.875_qat_model.tflite"
 bash run.sh -v
 ``````
 
+After the build process is finished, press enter and type 'reboot' to reboot and start the system.
+
 ### 5. Run Golden Test
 
-Using keyboard, type ```11g``` after the program started.
+After the program started, type ```11g``` to run test.
 
 ### 6. Run Evaluation Test
 
@@ -50,6 +50,5 @@ After the program started, press ctrl+c to leave litex-term, then run the follow
 python evaluation.py
 ```
 
-## Some Test Results
-
-...
+## Final Results
+0.2sec/img -> 0.75sec/img
