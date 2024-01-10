@@ -51,4 +51,4 @@ python evaluation.py
 ```
 
 ## Final Results
-2sec/img -> 0.75sec/img (x2.67 speed up)
+Latency: 2sec -> 0.75sec (x2.67 speed up)
